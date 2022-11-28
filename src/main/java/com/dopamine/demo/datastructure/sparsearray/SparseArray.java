@@ -1,4 +1,4 @@
-package com.dopamine.demo.datastructure;
+package com.dopamine.demo.datastructure.sparsearray;
 
 import java.util.Arrays;
 

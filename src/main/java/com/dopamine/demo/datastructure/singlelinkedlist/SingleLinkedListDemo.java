@@ -2,6 +2,8 @@ package com.dopamine.demo.datastructure.singlelinkedlist;
 
 import lombok.Data;
 
+import javax.xml.soap.Node;
+
 /**
  * @author chenzi.ma
  * @since 2022/11/24
@@ -163,6 +165,72 @@ public class SingleLinkedListDemo {
         }
     }
 
+    /**
+     * 获取有效节点个数
+     * @return
+     */
+    public int countNode(){
+        int count = 0;
+        //从头节点开始遍历
+        NodeDemo temp = headNode;
+        while (temp.getNext()!=null){
+            count++;
+            temp = temp.getNext();
+        }
+        return count;
+    }
+
+    /**
+     * 获取单链表倒数第index节点
+     * @param index
+     * @return
+     */
+    public NodeDemo getNodeByDesc(int index){
+        //获取单链表总有效节点数
+        int count = this.countNode();
+        if(count<index){
+            System.out.println("该节点不存在");
+            return null;
+        }
+
+        //目标节点是第count- index 个节点(从0开始计数)
+        int target = count - index ;
+        //从头节点后一位开始遍历
+        NodeDemo temp = headNode.getNext();
+        int i = 0;
+        while (temp!=null){
+            if(target == i){
+                break;
+            }
+            i++;
+            temp = temp.getNext();
+        }
+        return temp;
+    }
+
+    /**
+     * 对单链表进行反转
+     * @return
+     */
+    public void reversal(){
+        if(headNode.getNext() == null || headNode.getNext().getNext() == null){
+            System.out.println("无需反转");
+            return;
+        }
+        NodeDemo reverHead = new NodeDemo(0,"头节点");
+
+        NodeDemo temp = headNode.getNext();
+        NodeDemo next = null;
+        while (temp!=null){
+            next = temp.getNext();
+            temp.setNext(reverHead.getNext());
+            reverHead.setNext(temp);
+            temp = next;
+
+        }
+        headNode = reverHead;
+    }
+
     @Override
     public String toString() {
         //从头节点开始
@@ -182,6 +250,7 @@ public class SingleLinkedListDemo {
     public static void main(String[] args) {
         SingleLinkedListDemo singleLinkedList = new SingleLinkedListDemo();
         System.out.println(singleLinkedList.toString());
+        System.out.println("此时有效节点个数为:"+singleLinkedList.countNode());
         singleLinkedList.add(new NodeDemo(2,null,"2号节点"));
         singleLinkedList.add(new NodeDemo(4,null,"4号节点"));
         singleLinkedList.add(new NodeDemo(5,null,"5号节点"));
@@ -209,6 +278,13 @@ public class SingleLinkedListDemo {
         singleLinkedList.deleteNode(6);
         System.out.println(singleLinkedList.toString());
         singleLinkedList.deleteNode(7);
+        System.out.println("此时有效节点个数为:"+singleLinkedList.countNode());
+        System.out.println("此时倒数第一个节点为："+singleLinkedList.getNodeByDesc(1));
+        System.out.println("此时倒数第二个节点为："+singleLinkedList.getNodeByDesc(2));
+        System.out.println("此时倒数第三个节点为："+singleLinkedList.getNodeByDesc(3));
+        System.out.println("此时倒数第四个节点为："+singleLinkedList.getNodeByDesc(4));
+        singleLinkedList.reversal();
+        System.out.println("反转后的单链表为:"+singleLinkedList.toString());
     }
 }
 

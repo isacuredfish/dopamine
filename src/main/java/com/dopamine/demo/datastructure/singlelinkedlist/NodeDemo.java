@@ -25,7 +25,6 @@ public class NodeDemo {
      */
     private String name;
 
-
     public NodeDemo(int no, NodeDemo next, String name) {
         this.no = no;
         this.next = next;
@@ -36,6 +35,8 @@ public class NodeDemo {
         this.no = no;
         this.name = name;
     }
+
+
 
     @Override
     public String toString() {

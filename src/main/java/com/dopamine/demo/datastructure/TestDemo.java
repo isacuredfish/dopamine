@@ -8,8 +8,9 @@ package com.dopamine.demo.datastructure;
 public class TestDemo {
 
     public static void main(String[] args) {
-//        testEmptyArray();
-        System.out.println(3%4);
+        for (int i = 0; i < 0; i++) {
+            System.out.println(1);
+        }
     }
 
     /**

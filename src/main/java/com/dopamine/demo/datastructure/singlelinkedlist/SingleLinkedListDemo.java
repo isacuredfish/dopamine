@@ -3,6 +3,8 @@ package com.dopamine.demo.datastructure.singlelinkedlist;
 import lombok.Data;
 
 import javax.xml.soap.Node;
+import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * @author chenzi.ma
@@ -15,6 +17,14 @@ public class SingleLinkedListDemo {
      * 单链表需要有唯一的头节点，头节点序号0，默认无next
      */
     private NodeDemo headNode = new NodeDemo(0,null,"头节点");
+
+    public SingleLinkedListDemo(){
+        super();
+    }
+
+    public SingleLinkedListDemo(NodeDemo headNode) {
+        this.headNode = headNode;
+    }
 
     /**
      * 单链表添加方法 从头节点开始寻找，找到next为Null的数据为止，在当前数据上添加链表位置
@@ -231,6 +241,75 @@ public class SingleLinkedListDemo {
         headNode = reverHead;
     }
 
+    /**
+     * 反向遍历输出
+     * @return
+     */
+    public String toStringReverse(){
+        StringBuilder stringBuilder = new StringBuilder();
+        NodeDemo temp = headNode;
+        while (temp!=null){
+            StringBuilder tempBuider = new StringBuilder(temp.toString());
+            stringBuilder = tempBuider.append("<-").append(stringBuilder);
+            temp = temp.getNext();
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 反向遍历输出(利用栈)
+     * @return
+     */
+    public String toStringReverseStack(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Stack<String> stack = new Stack<>();
+        NodeDemo temp = headNode;
+        while (temp!=null){
+            stack.add(temp.toString());
+            temp = temp.getNext();
+        }
+        while (stack.size()>0){
+            stringBuilder.append(stack.pop()).append("<-");
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 将两个有序的链表合并为一个(暂不考虑no相同情况)
+     * @param demo1
+     * @param demo2
+     * @return
+     */
+    public static SingleLinkedListDemo addAll(SingleLinkedListDemo demo1,SingleLinkedListDemo demo2){
+        NodeDemo temp1 = demo1.getHeadNode().getNext();
+        NodeDemo temp2 = demo2.getHeadNode().getNext();
+
+        NodeDemo res = new NodeDemo(0,null,"首节点");
+        NodeDemo temp = res;
+
+        while (temp1!=null && temp2!=null){
+            int no1 = temp1.getNo();
+            int no2 = temp2.getNo();
+            if(no1 < no2){
+                temp.setNext(temp1);
+                temp1 = temp1.getNext();
+                temp = temp.getNext();
+            }else {
+                temp.setNext(temp2);
+                temp2 = temp2.getNext();
+                temp = temp.getNext();
+            }
+        }
+        if(temp1 == null && temp2!=null){
+            temp.setNext(temp2);
+        }
+        if(temp2 == null && temp1!=null){
+            temp.setNext(temp1);
+        }
+
+        return new SingleLinkedListDemo(res);
+    }
+
     @Override
     public String toString() {
         //从头节点开始
@@ -285,6 +364,16 @@ public class SingleLinkedListDemo {
         System.out.println("此时倒数第四个节点为："+singleLinkedList.getNodeByDesc(4));
         singleLinkedList.reversal();
         System.out.println("反转后的单链表为:"+singleLinkedList.toString());
+        singleLinkedList.reversal();
+        System.out.println("反转回来的单链表为:"+singleLinkedList.toString());
+        System.out.println("反向输出的单链表为:"+singleLinkedList.toStringReverse());
+        System.out.println("使用栈反向输出的单链表为:"+singleLinkedList.toStringReverseStack());
+
+        SingleLinkedListDemo demo1 = new SingleLinkedListDemo();
+        demo1.add(new NodeDemo(3,new NodeDemo(5,new NodeDemo(9,null,"9号节点"),"5号节点"),"3号节点"));
+        SingleLinkedListDemo demo2 = new SingleLinkedListDemo();
+        demo2.add(new NodeDemo(1,new NodeDemo(2,new NodeDemo(4,new NodeDemo(11,null,"11号节点"),"4号节点"),"2号节点"),"1号节点"));
+        System.out.println("合并后的单链表为:"+SingleLinkedListDemo.addAll(demo1,demo2).toString());
     }
 }
 

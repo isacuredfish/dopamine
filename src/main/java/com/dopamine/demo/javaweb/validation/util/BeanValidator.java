@@ -3,6 +3,9 @@ package com.dopamine.demo.javaweb.validation.util;
 
 import java.util.List;
 
+/**
+ * 自定义校验接口类
+ */
 public interface BeanValidator {
 
     /**

@@ -1,13 +1,4 @@
-/*
- * 文件名：ValidLogic.java
- * 版权：Copyright 2018-2019 JoyinTech. Co. Ltd. All Rights Reserved.
- * 描述：资产管理系统V2.0
- * 修改人：何阳阳
- * 修改时间：2018年1月16日
- * 修改内容：新建
- * 系统名称：资产管理系统V2.0
- */
- 
+
 package com.dopamine.demo.javaweb.validation.util;
 
 import javax.validation.Constraint;
@@ -27,11 +18,20 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface ValidLogic {
-    
+
+    /**
+     * 提醒内容
+     */
     String message() default "";
 
+    /**
+     * 自定义校验实现类，需实现BeanValidator
+     */
     Class<? extends BeanValidator> targetClass();
 
+    /**
+     * 分组功能
+     */
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

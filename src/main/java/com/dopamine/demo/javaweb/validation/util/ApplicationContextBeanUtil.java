@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author chenzi.ma
  * @date 2022/12/27 13:45
+ * 通过spring容器获取类对象
  **/
 @Component
 public class ApplicationContextBeanUtil implements ApplicationContextAware {
